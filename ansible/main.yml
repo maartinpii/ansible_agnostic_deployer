@@ -72,7 +72,7 @@
       tags:
         - refresh_inventory
       # Dont run task when its coming from tower as this is handled by tower
-      when: 'ansible_username is not "awx"'
+      when: ansible_username is not "awx"
       
     - name: Refresh in-memory cloud_provider cache
       meta: refresh_inventory
