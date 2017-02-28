@@ -3,6 +3,8 @@
 
 # Determine User Running Ansible
 - name: Get the user running ansible
+  hosts: localhost
+  connection: local
   tasks:
     - become: false
       local_action: command whoami
@@ -51,8 +53,8 @@
 #################################################################################
 #################################################################################
 - name: Step 001 Deploy Infrastructure
-  #hosts: localhost
-  #connection: local
+  hosts: localhost
+  connection: local
   vars_files:
     - "{{ playbook_dir }}/configs/{{ env_type }}/env_vars.yml"
     - "{{ playbook_dir }}/configs/{{ env_type }}/env_secret_vars.yml"
