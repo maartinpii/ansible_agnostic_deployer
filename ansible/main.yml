@@ -3,10 +3,10 @@
 
 # Determine User Running Ansible
 - name: Get the user running ansible
-  local_action:
-    become: false
-    local_action: command whoami
-    register: ansible_username
+  tasks:
+    - become: false
+      local_action: command whoami
+      register: ansible_username
   
 ################################################################################
 ################################################################################
@@ -59,15 +59,14 @@
   tags:
     - step001
     - deploy_infrastructure
-  #tasks:
-  local_action:
+  tasks:
     - name: Deploy Infrastucture
       include: "{{ playbook_dir }}/cloud_providers/{{ cloud_provider }}_infrastructure_deployment.yml"
       tags:
         - infrastucture_deployment
 
     - name: Refresh cloud_provider cache
-      command: "{{ playbook_dir }}/inventory/{{ cloud_provider }}.py --refresh-cache"
+      local_action: command "{{ playbook_dir }}/inventory/{{ cloud_provider }}.py --refresh-cache"
       tags:
         - refresh_inventory
       # Dont run task when its coming from tower as this is handled by tower
