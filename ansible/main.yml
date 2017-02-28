@@ -2,10 +2,11 @@
 ---
 
 # Determine User Running Ansible
-- name: get the username running ansible
-  become: false
-  local_action: command whoami
-  register: ansible_username
+- name: Get the user running ansible
+  local_action:
+    become: false
+    local_action: command whoami
+    register: ansible_username
   
 ################################################################################
 ################################################################################
