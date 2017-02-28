@@ -1,15 +1,5 @@
 #vim: set ft=ansible:
 ---
-
-# Determine User Running Ansible
-- name: Get the user running ansible
-  hosts: localhost
-  connection: local
-  tasks:
-    - become: false
-      local_action: command whoami
-      register: ansible_username
-  
 ################################################################################
 ################################################################################
 ############ Step 000 Pre Infrastructure Deploy Tasks
@@ -71,8 +61,6 @@
       local_action: command "{{ playbook_dir }}/inventory/{{ cloud_provider }}.py --refresh-cache"
       tags:
         - refresh_inventory
-      # Dont run task when its coming from tower as this is handled by tower
-      when: ansible_username is not "awx"
       
     - name: Refresh in-memory cloud_provider cache
       meta: refresh_inventory
